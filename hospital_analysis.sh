@@ -26,3 +26,43 @@ process_vitals () {
     echo ""
     echo "Critical alerts saved to: $critical_report"
 }
+water_audit () {
+
+    echo ""
+    echo "Calculating average usage for ICU_WATER_RESERVE..."
+    echo ""
+
+    awk -F ' \\| ' '
+        /ICU_WATER_RESERVE/ {
+            sum += $3
+            count++
+        }
+        END {
+            if (count > 0) {
+                avg = sum / count
+                printf "-------------------\n"
+                printf "KNH WATER USAGE AUDIT SUMMARY\n"
+                printf "-------------------\n"
+                printf "   Device        : ICU_WATER_RESERVE\n"
+                printf "   Total Readings: %d\n", count
+                printf "   Total Usage   : %.2f Liters/min\n", sum
+                printf "   Average Usage : %.2f Liters/min\n", avg
+                printf "-------------------\n"
+
+            } else {
+                printf "No ICU_WATER_RESERVE data found in log.\n"
+            }
+        }
+    ' "$water_log"
+
+    echo ""
+    echo "Water audit complete"
+    echo ""
+
+}
+
+
+process_vitals
+water_audit
+
+echo "Analysis Complete"
