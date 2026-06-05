@@ -42,3 +42,8 @@ secure_data() {
     ls -l active_logs
     echo ""
 }
+initialize_system
+secure_data
+
+echo "System Environment Secured"
+echo "Date: $(date '+%A, %d %B %Y')"
