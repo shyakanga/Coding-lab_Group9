@@ -24,3 +24,21 @@ initialize_system() {
     fi
     echo ""
 }
+
+
+secure_data() {
+
+    chmod 700 active_logs
+
+    echo "Updating permissions on active_logs's contents"
+    find active_logs -exec chmod 700 {} +
+
+    echo ""
+    echo "Current permissions on active_logs"
+    ls -ld active_logs
+
+    echo ""
+    echo "Current permissions on files inside active_logs"
+    ls -l active_logs
+    echo ""
+}
